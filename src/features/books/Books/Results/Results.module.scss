@@ -1,0 +1,17 @@
+.resultsSection {
+  margin: 120px 0;
+
+  .totalResults {
+    font-size: var(--font-size-xl);
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .booksList {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(16rem), 1fr));
+    grid-gap: 4.375rem;
+    padding: 0;
+    margin: 0;
+  }
+}
