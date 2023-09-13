@@ -1,4 +1,5 @@
 import { AxiosInstance } from 'axios';
+import { SearchParamsType } from 'features/books/books-reducer';
 
 export class BooksApi {
   constructor(private instance: AxiosInstance) {}
@@ -10,8 +11,7 @@ export class BooksApi {
 
 // Types
 
-export type ParamsType = {
-  q: string;
+export type ParamsType = Omit<SearchParamsType, 'subject'> & {
   key?: string;
 };
 

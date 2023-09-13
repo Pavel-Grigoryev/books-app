@@ -1,0 +1,26 @@
+.searchSection {
+  max-width: 600px;
+  margin: 0 auto 120px;
+
+  .title {
+    margin-bottom: 40px;
+    text-align: center;
+    font-weight: var(--font-weight-bold);
+  }
+
+  .textField {
+    & input {
+      padding-right: 45px;
+    }
+
+    & div {
+      background-color: var(--color-background);
+    }
+  }
+
+  .searchButton {
+    position: absolute;
+    right: 0;
+    top: 20px;
+  }
+}

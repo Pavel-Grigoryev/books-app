@@ -14,9 +14,9 @@ export const Results = memo(({ totalBooks }: PropsType) => {
   const results = totalBooks === 1 ? 'result' : 'resutls';
   const totalResults = totalBooks ? `Found ${totalBooks} ${results}` : 'No books found';
   return (
-    <div className={s.resultsSection}>
+    <section className={s.resultsSection}>
       <p className={s.totalResults}>{totalResults}</p>
       {totalBooks && <ul className={s.booksList}> {resultBooks}</ul>}
-    </div>
+    </section>
   );
 });
