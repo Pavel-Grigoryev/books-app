@@ -1,18 +1,4 @@
 // common
-export const mainContainerSX = {
-  // height: 'calc(100vh - 80px)',
-  backgroundColor: '#f0f2f5',
-  position: 'relative',
-  top: '50px',
-  zIndex: 100,
-  width: 'calc(100% - 38px)',
-  maxWidth: '1600px!important',
-  paddingLeft: '0px!important',
-  paddingRight: '0px!important',
-  height: 'calc(100% - 80px)',
-  overflow: 'hidden',
-};
-
 export const smallContainerSX = {
   backgroundColor: '#e5e3df',
   color: '#000',
@@ -28,6 +14,21 @@ export const smallContainerSX = {
   boxShadow: '0 17px 50px 0 rgba(11,20,26,.19), 0 12px 15px 0 rgba(11,20,26,.24)',
 };
 
+export const smallContainerMobileSX = {
+  backgroundColor: '#e5e3df',
+  color: '#000',
+  position: 'relative',
+  paddingLeft: '20px!important',
+  paddingRight: '20px!important',
+  paddingBottom: '20px',
+  paddingTop: '20px',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  flexDirection: 'column',
+  boxShadow: '0 17px 50px 0 rgba(11,20,26,.19), 0 12px 15px 0 rgba(11,20,26,.24)',
+};
+
 export const selectSX = {
   borderRadius: '4px',
   height: '40px',
@@ -35,6 +36,16 @@ export const selectSX = {
 };
 
 // end common
+
+// Header
+
+export const linProgressSX = {
+  position: 'absolute',
+  bottom: '0',
+  width: '100%',
+};
+
+// end Header
 
 // Search
 

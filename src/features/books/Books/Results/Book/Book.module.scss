@@ -1,0 +1,41 @@
+.bookSection {
+  position: relative;
+
+  .image {
+    width: 100%;
+    height: auto;
+    flex: 0 0 auto;
+    object-fit: cover;
+  }
+
+  .bookInfo {
+    display: flex;
+    justify-content: right;
+    flex-grow: 1;
+    flex-direction: column;
+    margin-top: 30px;
+    width: 100%;
+  }
+
+  .category {
+    opacity: 0.6;
+    text-decoration: underline;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 5px;
+  }
+
+  .title {
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .authorsList {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 5px;
+    margin-bottom: 20px;
+  }
+}

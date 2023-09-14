@@ -2,6 +2,10 @@
   max-width: 600px;
   margin: 0 auto 120px;
 
+  @media only screen and (max-width: 768px) {
+    margin: 0 auto 60px;
+  }
+
   .title {
     margin-bottom: 40px;
     text-align: center;

@@ -7,11 +7,19 @@ export class BooksApi {
   public getBooks(params: ParamsType) {
     return this.instance.get<ResponseType>('/volumes', { params });
   }
+
+  public getSingleBook(id: string, params: SingleBookParamsType) {
+    return this.instance.get<BookType>(`/volumes/${id}`, { params });
+  }
 }
 
 // Types
 
 export type ParamsType = Omit<SearchParamsType, 'subject'> & {
+  key?: string;
+};
+
+export type SingleBookParamsType = {
   key?: string;
 };
 
@@ -38,4 +46,5 @@ export type VolumeInfoType = {
 type ImageLinksType = {
   smallThumbnail: string;
   thumbnail: string;
+  large?: string;
 };

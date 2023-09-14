@@ -14,6 +14,7 @@ type PropsType = {
 export const Results = memo(({ totalBooks }: PropsType) => {
   const books = useAppSelector(booksSelectors.selectBooks);
   const startIndex = useAppSelector(booksSelectors.selectStartIndex);
+  const startBookIndex = startIndex || 0;
   const resultBooks = books?.map((book: BookType) => <BookItem key={book.id} book={book} />);
   const results = totalBooks === 1 ? 'result' : 'resutls';
   const totalResults = totalBooks ? `Found ${totalBooks} ${results}` : 'No books found';
@@ -27,10 +28,10 @@ export const Results = memo(({ totalBooks }: PropsType) => {
   return (
     <section className={s.resultsSection}>
       <p className={s.totalResults}>{totalResults}</p>
-      {totalBooks && (
+      {totalBooks > 0 && (
         <>
           <ul className={s.booksList}> {resultBooks}</ul>
-          {totalBooks > MAX_RESULTS && startIndex + MAX_RESULTS < totalBooks && (
+          {totalBooks > MAX_RESULTS && startBookIndex + MAX_RESULTS < totalBooks && (
             <div className={s.buttonBlock}>
               <Button
                 type="button"

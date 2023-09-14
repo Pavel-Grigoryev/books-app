@@ -4,7 +4,7 @@ import FormGroup from '@mui/material/FormGroup';
 import TextField from '@mui/material/TextField';
 import FormLabel from '@mui/material/FormLabel';
 import { useAppDispatch } from 'common/hooks/useAppDispatch';
-import { booksActions } from 'features/books/books-reducer';
+import { booksActions, CategoriesType, OrderByType } from 'features/books/books-reducer';
 import {
   formControlSX,
   formGroupSX,
@@ -20,6 +20,7 @@ import style from 'common/styles/errors.module.scss';
 import { booksSelectors } from 'features/books/index';
 import { useAppSelector } from 'common/hooks/useAppSelector';
 import { SuperSelect } from 'common/components/SuperSelect';
+import { useSearchParams } from 'react-router-dom';
 import s from './Search.module.scss';
 
 export const Search = () => {
@@ -27,6 +28,9 @@ export const Search = () => {
   const searchParams = useAppSelector(booksSelectors.selectSearchParams);
   const sortingSelectNames = useAppSelector(booksSelectors.selectSortingSelectNames);
   const subjectSelectNames = useAppSelector(booksSelectors.selectSubjectSelectNames);
+  const query = useAppSelector(booksSelectors.selectQuery);
+
+  const [queryParams, setQueryParams] = useSearchParams();
 
   const sortingNames = sortingSelectNames.map((el) => (
     <MenuItem key={el.id} value={el.name}>
@@ -41,13 +45,18 @@ export const Search = () => {
 
   useEffect(() => {
     if (searchParams.q) {
-      dispatch(booksActions.setBooksTC());
+      dispatch(booksActions.fetchBooksTC());
+      setQueryParams({
+        q: searchParams.q,
+        orderBy: searchParams.orderBy,
+        subject: searchParams.subject,
+      });
     }
   }, [searchParams]);
 
   const formik = useFormik({
     initialValues: {
-      search: searchParams.q,
+      search: query,
       orderBy: searchParams.orderBy,
       subject: searchParams.subject,
     },
@@ -65,6 +74,21 @@ export const Search = () => {
     },
   });
 
+  useEffect(() => {
+    const params = Object.fromEntries(queryParams);
+    if (params.q) {
+      formik.setFieldValue('search', params.q);
+      formik.setFieldValue('orderBy', params.orderBy);
+      formik.setFieldValue('subject', params.subject);
+      dispatch(
+        booksActions.setSearchParamsAC({
+          q: params.q,
+          orderBy: params.orderBy as OrderByType,
+          subject: params.subject as CategoriesType,
+        })
+      );
+    }
+  }, []);
   return (
     <section className={s.searchSection}>
       <h1 className={s.title}>Search for books</h1>

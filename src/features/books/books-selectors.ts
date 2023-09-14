@@ -6,3 +6,4 @@ export const selectSearchParams = (state: AppRootStateType) => state.books.searc
 export const selectSortingSelectNames = (state: AppRootStateType) => state.books.sortingSelectNames;
 export const selectSubjectSelectNames = (state: AppRootStateType) => state.books.subjectSelectNames;
 export const selectStartIndex = (state: AppRootStateType) => state.books.searchParams.startIndex;
+export const selectQuery = (state: AppRootStateType) => state.books.searchParams.q;

@@ -1,8 +1,10 @@
-import { setAppStatusAC } from 'app/app-reducer';
+import { appActions } from 'app';
 import { AppThunk } from 'common/utils/types';
 import { booksApi } from 'api/api';
 import { BookType, ParamsType } from 'api/books-api';
 import { MAX_RESULTS } from 'common/constants/searchParams';
+import axios from 'axios';
+import { handleServerNetworkError } from 'common/utils/error-utils';
 
 const initialState = {
   totalBooks: null as null | number,
@@ -49,11 +51,12 @@ export const booksReducer = (
       };
     case 'BOOKS/SET-START-INDEX': {
       const initialStep = state.searchParams.startIndex === 0 ? 1 : 0;
+      const searchParams = state.searchParams.startIndex ? state.searchParams.startIndex : 0;
       return {
         ...state,
         searchParams: {
           ...state.searchParams,
-          startIndex: state.searchParams.startIndex + MAX_RESULTS + initialStep,
+          startIndex: searchParams + MAX_RESULTS + initialStep,
         },
       };
     }
@@ -75,29 +78,28 @@ export const setBooksAC = (totalBooks: number, books: null | BookType[]) =>
     books,
   }) as const;
 
-export const setMoreBooksAC = (books: BookType[]) =>
+const setMoreBooksAC = (books: BookType[]) =>
   ({
     type: 'BOOKS/SET-MORE-BOOKS',
     books,
   }) as const;
 
-export const setStartIndexAC = () =>
+const setStartIndexAC = () =>
   ({
     type: 'BOOKS/SET-START-INDEX',
   }) as const;
 
-export const setSearchParamsAC = (
-  searchParams: Omit<SearchParamsType, 'startIndex' | 'maxResults'>
-) =>
-  ({
+const setSearchParamsAC = (searchParams: SearchParamsType) => {
+  return {
     type: 'BOOKS/SET-SEARCH-PARAMS',
     searchParams,
-  }) as const;
+  } as const;
+};
 
 // Thunks
 
-export const setBooksTC = (): AppThunk => async (dispatch, getState) => {
-  dispatch(setAppStatusAC('loading'));
+const fetchBooksTC = (): AppThunk => async (dispatch, getState) => {
+  dispatch(appActions.setAppStatusAC('loading'));
   try {
     const { searchParams } = getState().books;
     const { subject, ...restSearchParams } = searchParams;
@@ -123,21 +125,27 @@ export const setBooksTC = (): AppThunk => async (dispatch, getState) => {
           },
         }))
       : null;
-    if (searchParams.startIndex > MAX_RESULTS) {
+    if (
+      searchParams &&
+      searchParams.startIndex !== undefined &&
+      searchParams.startIndex > MAX_RESULTS
+    ) {
       if (books) {
         dispatch(setMoreBooksAC(books));
       }
     } else {
       dispatch(setBooksAC(res.data.totalItems, books));
     }
-    dispatch(setAppStatusAC('succeeded'));
+    dispatch(appActions.setAppStatusAC('succeeded'));
   } catch (e) {
-    console.error(e);
+    if (axios.isAxiosError(e)) {
+      handleServerNetworkError(e, dispatch);
+    }
   }
 };
 
 export const booksActions = {
-  setBooksTC,
+  fetchBooksTC,
   setBooksAC,
   setSearchParamsAC,
   setStartIndexAC,
@@ -163,8 +171,8 @@ export type CategoriesType =
   | 'poetry';
 export type SearchParamsType = {
   q: string;
-  startIndex: number;
-  maxResults: number;
+  startIndex?: number;
+  maxResults?: number;
   subject: CategoriesType;
   orderBy: OrderByType;
 };
