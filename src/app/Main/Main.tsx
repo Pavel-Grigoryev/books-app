@@ -10,8 +10,9 @@ export const Main = () => {
     <main className={s.main}>
       <div className={s.container}>
         <Routes>
-          <Route path={PATH.BOOKS} element={<Books />} />
+          <Route path={PATH.BOOKS_PAGE} element={<Books />} />
           <Route path={PATH.NOT_FOUND} element={<NotFound />} />
+          <Route path={PATH.BOOK_PAGE} element={<NotFound />} />
           <Route path="*" element={<Navigate to={PATH.NOT_FOUND} />} />
         </Routes>
       </div>

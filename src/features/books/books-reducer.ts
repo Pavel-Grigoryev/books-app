@@ -4,7 +4,7 @@ import { booksApi } from 'api/api';
 import { BookType, ParamsType } from 'api/books-api';
 import { MAX_RESULTS } from 'common/constants/searchParams';
 
-const initalState = {
+const initialState = {
   totalBooks: null as null | number,
   foundBooks: null as null | BookType[],
   searchParams: {
@@ -29,9 +29,9 @@ const initalState = {
   ] as SortingSubjectNamesType[],
 };
 export const booksReducer = (
-  state: InitalStateType = initalState,
+  state: InitialStateType = initialState,
   action: BooksActionsType
-): InitalStateType => {
+): InitialStateType => {
   switch (action.type) {
     case 'BOOKS/SET-BOOKS':
       return { ...state, totalBooks: action.totalBooks, foundBooks: action.books };
@@ -43,8 +43,25 @@ export const booksReducer = (
           q: action.searchParams.q,
           orderBy: action.searchParams.orderBy,
           subject: action.searchParams.subject,
+          startIndex: 0,
+          maxResults: MAX_RESULTS,
         },
       };
+    case 'BOOKS/SET-START-INDEX': {
+      const initialStep = state.searchParams.startIndex === 0 ? 1 : 0;
+      return {
+        ...state,
+        searchParams: {
+          ...state.searchParams,
+          startIndex: state.searchParams.startIndex + MAX_RESULTS + initialStep,
+        },
+      };
+    }
+    case 'BOOKS/SET-MORE-BOOKS': {
+      const booksArray = state.foundBooks !== null ? [...state.foundBooks, ...action.books] : null;
+      return { ...state, foundBooks: booksArray };
+    }
+
     default:
       return state;
   }
@@ -58,7 +75,20 @@ export const setBooksAC = (totalBooks: number, books: null | BookType[]) =>
     books,
   }) as const;
 
-export const setSearchParamsAC = (searchParams: SearchParamsType) =>
+export const setMoreBooksAC = (books: BookType[]) =>
+  ({
+    type: 'BOOKS/SET-MORE-BOOKS',
+    books,
+  }) as const;
+
+export const setStartIndexAC = () =>
+  ({
+    type: 'BOOKS/SET-START-INDEX',
+  }) as const;
+
+export const setSearchParamsAC = (
+  searchParams: Omit<SearchParamsType, 'startIndex' | 'maxResults'>
+) =>
   ({
     type: 'BOOKS/SET-SEARCH-PARAMS',
     searchParams,
@@ -93,22 +123,35 @@ export const setBooksTC = (): AppThunk => async (dispatch, getState) => {
           },
         }))
       : null;
-
-    dispatch(setBooksAC(res.data.totalItems, books));
+    if (searchParams.startIndex > MAX_RESULTS) {
+      if (books) {
+        dispatch(setMoreBooksAC(books));
+      }
+    } else {
+      dispatch(setBooksAC(res.data.totalItems, books));
+    }
     dispatch(setAppStatusAC('succeeded'));
   } catch (e) {
     console.error(e);
   }
 };
 
-export const booksActions = { setBooksTC, setBooksAC, setSearchParamsAC };
+export const booksActions = {
+  setBooksTC,
+  setBooksAC,
+  setSearchParamsAC,
+  setStartIndexAC,
+  setMoreBooksAC,
+};
 
 // Types
 
-type InitalStateType = typeof initalState;
+type InitialStateType = typeof initialState;
 type SetBooksAT = ReturnType<typeof setBooksAC>;
 type SetSearchParamsAT = ReturnType<typeof setSearchParamsAC>;
-export type BooksActionsType = SetBooksAT | SetSearchParamsAT;
+type SetStartIndexAT = ReturnType<typeof setStartIndexAC>;
+type SetMoreBooksAT = ReturnType<typeof setMoreBooksAC>;
+export type BooksActionsType = SetBooksAT | SetSearchParamsAT | SetStartIndexAT | SetMoreBooksAT;
 export type OrderByType = 'relevance' | 'newest';
 export type CategoriesType =
   | 'all'
@@ -120,8 +163,8 @@ export type CategoriesType =
   | 'poetry';
 export type SearchParamsType = {
   q: string;
-  startIndex?: number;
-  maxResults?: number;
+  startIndex: number;
+  maxResults: number;
   subject: CategoriesType;
   orderBy: OrderByType;
 };

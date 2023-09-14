@@ -40,7 +40,9 @@ export const Search = () => {
   ));
 
   useEffect(() => {
-    dispatch(booksActions.setBooksTC());
+    if (searchParams.q) {
+      dispatch(booksActions.setBooksTC());
+    }
   }, [searchParams]);
 
   const formik = useFormik({
