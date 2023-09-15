@@ -1,5 +1,6 @@
 {
   "name": "books-app",
+  "homepage": "https://Pavel-Grigoryev.github.io/books-app",
   "jest": {
     "transformIgnorePatterns": [
       "node_modules/(?!axios)/"
@@ -23,6 +24,7 @@
     "@types/react-redux": "^7.1.26",
     "axios": "^1.5.0",
     "formik": "^2.4.4",
+    "gh-pages": "^6.0.0",
     "node-sass": "^9.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -43,7 +45,9 @@
     "eject": "react-scripts eject",
     "lint": "eslint . --fix",
     "format": "prettier . --write",
-    "fix-code": "yarn lint && yarn format "
+    "fix-code": "yarn lint && yarn format ",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [

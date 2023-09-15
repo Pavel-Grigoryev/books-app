@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.scss';
 import { createTheme, ThemeProvider } from '@mui/material';
-import { BrowserRouter } from 'react-router-dom';
 import { App } from 'app';
 import { Provider } from 'react-redux';
 import { store } from 'app/store';
+import { HashRouter } from 'react-router-dom';
 
 const theme = createTheme({
   palette: {
@@ -21,10 +21,10 @@ const theme = createTheme({
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <ThemeProvider theme={theme}>
-    <BrowserRouter>
+    <HashRouter>
       <Provider store={store}>
         <App />
       </Provider>
-    </BrowserRouter>
+    </HashRouter>
   </ThemeProvider>
 );

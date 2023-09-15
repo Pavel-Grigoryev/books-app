@@ -1,5 +1,5 @@
 // common
-export const smallContainerSX = {
+export const smallContSX = {
   backgroundColor: '#e5e3df',
   color: '#000',
   position: 'relative',
@@ -14,7 +14,7 @@ export const smallContainerSX = {
   boxShadow: '0 17px 50px 0 rgba(11,20,26,.19), 0 12px 15px 0 rgba(11,20,26,.24)',
 };
 
-export const smallContainerMobileSX = {
+export const smallContMobSX = {
   backgroundColor: '#e5e3df',
   color: '#000',
   position: 'relative',

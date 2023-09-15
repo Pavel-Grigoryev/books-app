@@ -8,7 +8,7 @@ import bookDefaultImage from 'assets/images/BookImage.png';
 import { ReturnLink } from 'common/components/ReturnLink';
 import { PATH } from 'common/constants/routes';
 import { useMediaQuery } from 'react-responsive';
-import { smallContainerMobileSX, smallContainerSX } from 'common/styles/sx/sx_styles';
+import { smallContMobSX, smallContSX } from 'common/styles/sx/sx_styles';
 import s from './Book.module.scss';
 
 export const Book = () => {
@@ -54,7 +54,7 @@ export const Book = () => {
 
   const isMobile = useMediaQuery({ query: '(max-width: 460px)' });
 
-  const smallContainerStyle = isMobile ? smallContainerMobileSX : smallContainerSX;
+  const smallContainerStyle = isMobile ? smallContMobSX : smallContSX;
 
   return (
     <section className={s.bookSection}>
