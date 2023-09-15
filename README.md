@@ -1,4 +1,4 @@
-## Memorize App
+## Books App
 
 Books-app is an application for finding books using the Google Books API.
 
