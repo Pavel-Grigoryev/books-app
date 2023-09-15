@@ -1,6 +1,12 @@
 .main {
   background: url('../../assets/images/booksBackground.jpg') fixed 0 0 / cover no-repeat;
   min-height: 100vh;
+  position: relative;
+}
+
+.backgroundImage {
+  position: fixed;
+  width: 100%;
 }
 
 .container {

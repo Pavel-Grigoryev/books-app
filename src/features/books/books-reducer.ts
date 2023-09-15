@@ -46,17 +46,18 @@ export const booksReducer = (
           orderBy: action.searchParams.orderBy,
           subject: action.searchParams.subject,
           startIndex: 0,
-          maxResults: MAX_RESULTS,
         },
       };
     case 'BOOKS/SET-START-INDEX': {
       const initialStep = state.searchParams.startIndex === 0 ? 1 : 0;
-      const searchParams = state.searchParams.startIndex ? state.searchParams.startIndex : 0;
+      const searchParamsStartIndex = state.searchParams.startIndex
+        ? state.searchParams.startIndex
+        : 0;
       return {
         ...state,
         searchParams: {
           ...state.searchParams,
-          startIndex: searchParams + MAX_RESULTS + initialStep,
+          startIndex: searchParamsStartIndex + MAX_RESULTS + initialStep,
         },
       };
     }
@@ -154,7 +155,7 @@ export const booksActions = {
 
 // Types
 
-type InitialStateType = typeof initialState;
+export type InitialStateType = typeof initialState;
 type SetBooksAT = ReturnType<typeof setBooksAC>;
 type SetSearchParamsAT = ReturnType<typeof setSearchParamsAC>;
 type SetStartIndexAT = ReturnType<typeof setStartIndexAC>;

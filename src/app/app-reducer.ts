@@ -26,7 +26,7 @@ export const appActions = { setAppStatusAC, setAppErrorAC };
 
 // Types
 
-type InitialStateType = typeof initialState;
+export type InitialStateType = typeof initialState;
 type SetAppStatusAT = ReturnType<typeof setAppStatusAC>;
 type SetAppErrorAT = ReturnType<typeof setAppErrorAC>;
 export type AppActionsType = SetAppStatusAT | SetAppErrorAT;

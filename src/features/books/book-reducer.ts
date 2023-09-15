@@ -72,7 +72,7 @@ export const bookActions = { setBookAC, fetchBookTC, clearBookDataAC };
 
 // Types
 
-type InitialStateType = typeof initialState;
+export type InitialStateType = typeof initialState;
 type SetBookAT = ReturnType<typeof setBookAC>;
 type ClearBookDataAT = ReturnType<typeof clearBookDataAC>;
 export type BookActionsType = SetBookAT | ClearBookDataAT;

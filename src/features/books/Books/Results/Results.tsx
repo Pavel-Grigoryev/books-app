@@ -16,7 +16,7 @@ export const Results = memo(({ totalBooks }: PropsType) => {
   const startIndex = useAppSelector(booksSelectors.selectStartIndex);
   const startBookIndex = startIndex || 0;
   const resultBooks = books?.map((book: BookType) => <BookItem key={book.id} book={book} />);
-  const results = totalBooks === 1 ? 'result' : 'resutls';
+  const results = totalBooks === 1 ? 'result' : 'results';
   const totalResults = totalBooks ? `Found ${totalBooks} ${results}` : 'No books found';
 
   const dispatch = useAppDispatch();
