@@ -154,7 +154,14 @@ export const booksActions = {
 };
 
 // Types
-
+type SortingSelectNamesType = {
+  id: number;
+  name: OrderByType;
+};
+type SortingSubjectNamesType = {
+  id: number;
+  name: CategoriesType;
+};
 export type InitialStateType = typeof initialState;
 type SetBooksAT = ReturnType<typeof setBooksAC>;
 type SetSearchParamsAT = ReturnType<typeof setSearchParamsAC>;
@@ -176,12 +183,4 @@ export type SearchParamsType = {
   maxResults?: number;
   subject: CategoriesType;
   orderBy: OrderByType;
-};
-type SortingSelectNamesType = {
-  id: number;
-  name: OrderByType;
-};
-type SortingSubjectNamesType = {
-  id: number;
-  name: CategoriesType;
 };
